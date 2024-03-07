@@ -1,0 +1,65 @@
+debug: true
+
+server:
+  port: 80
+
+logging:
+  file:
+    path: ./logs
+
+springdoc:
+  swagger-ui:
+    path: /swagger
+
+spring:
+  sql:
+    init:
+      # mode: always
+      username: root
+      password: mysql@6974
+      schema-locations:
+        - "classpath:/sql/schema.sql"
+  servlet:
+    multipart:
+      max-file-size: 20MB
+  mvc:
+    servlet:
+      load-on-startup: 0
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/explorer_schema?createDatabaseIfNotExist=true
+    username: root
+    password: mysql@6974
+  web:
+    resources:
+      static-locations:
+        - classpath:/dist
+        - file:./website/dist
+        - file:./upload
+  mail:
+    host: smtp.qq.com
+    protocol: smtp
+    default-encoding: UTF-8
+    username: 505050728@qq.com
+    password: jqlryjqqipbtbhgi
+
+mybatis-plus:
+  type-aliases-package: nathol.chat.master.model
+  mapper-locations:
+    - classpath:mapper/*.xml
+
+sa-token:
+  # token 名称 (同时也是cookie名称)
+  token-name: token
+  # token 有效期, 单位s 默认30天, -1代表永远不过期
+  timeout: -1
+  # token 临时有效期 (指定时间内无操作就视为token过期) 单位s
+  activity-timeout: -1
+  # 是否允许同一账号并发登录 (为true时允许一起登录, 为false时所有登录共用一个token, 为false时每次登录新建一个token)
+  is-concurrent: false
+  # 在多人登录同一账号时, 是否共用一个 token (为true时所有登录共用同一个token, 为false)
+  is-share: true
+  # token 风格
+  token-style: uuid
+  # 是否输出操作日志
+  is-log: true
