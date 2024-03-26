@@ -1,3 +1,11 @@
+create table email
+(
+    code      varchar(255) not null
+        primary key,
+    email     varchar(255) not null,
+    timestamp bigint       not null
+);
+
 create table user
 (
     id       bigint auto_increment
@@ -49,5 +57,4 @@ create table website
         foreign key (user) references user (id)
             on delete cascade
 );
-
 

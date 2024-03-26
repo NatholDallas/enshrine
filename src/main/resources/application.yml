@@ -37,9 +37,9 @@ spring:
         - file:./website/dist
         - file:./upload
   mail:
-    host: smtp.qq.com
     protocol: smtp
     default-encoding: UTF-8
+    host: smtp.qq.com
     username: 505050728@qq.com
     password: jqlryjqqipbtbhgi
 

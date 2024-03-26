@@ -1,4 +1,5 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { IsLogin, type Permission } from '@/common/permission'
+import { createRouter, createWebHistory, type NavigationGuardWithThis } from 'vue-router'
 import { Urls } from './urls'
 
 const router = createRouter({
@@ -8,7 +9,7 @@ const router = createRouter({
       path: Urls.home,
       name: Urls.home,
       redirect: Urls.star,
-      beforeEnter: async () => {},
+      beforeEnter: routeCtl({ auth: [IsLogin], backPath: Urls.login }),
       component: () => import('@/views/HomeView.vue'),
       children: [
         {
@@ -29,29 +30,34 @@ const router = createRouter({
       ]
     },
     {
+      beforeEnter: routeCtl({ auth: [IsLogin], nextPath: Urls.home }),
       path: Urls.login,
       name: Urls.login,
-      component: () => import('@/views/LoginView.vue')
+      component: () => import('@/views/account/LoginView.vue')
+    },
+    {
+      path: Urls.register,
+      name: Urls.register,
+      component: () => import('@/views/account/RegisterView.vue')
     }
   ]
 })
 
-function routeCtl() {
-  // return async (to, from, next) => {
-  //   const permission = await aGetPermission(...(options.permissions || []))
-  //   let path: string = ''
-  //   if (!permission) {
-  //     if (options.backPath) path = isFunction(options.backPath) ? options.backPath() : options.backPath
-  //   } else {
-  //     if (options.nextPath) path = isFunction(options.nextPath) ? options.nextPath(permission) : options.nextPath
-  //   }
-  //   if (!path) {
-  //     return next()
-  //   }
-  //   to = router.resolve(path)
-  //   if (to.meta.callback) to.query.callback = location.pathname
-  //   return next(to)
-  // }
+type RouteCTL = {
+  auth?: (typeof Permission)[]
+  backPath?: string
+  nextPath?: string
+}
+
+function routeCtl({ auth, backPath, nextPath }: RouteCTL = {}): NavigationGuardWithThis<undefined> | NavigationGuardWithThis<undefined>[] {
+  return async (to, from, next) => {
+    if (!auth) return next()
+    const $auth = auth.some((e) => new e().verify())
+    const path = $auth ? nextPath : backPath
+    if (!path) return next()
+    to = router.resolve(path)
+    return next(to)
+  }
 }
 
 export default router

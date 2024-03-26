@@ -8,7 +8,7 @@ import { ev$build } from './plugin/vite.electron.build'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue(), UnoCSS(), ev$dev(), ev$build()],
+  plugins: [vue(), UnoCSS(), ev$build()],
   base: './',
   resolve: {
     alias: {

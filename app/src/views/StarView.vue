@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { StarRequest } from '@/common/app/api'
-import ComCtl from '@/components/ComCtl.vue'
-import { Card, Table, defineTableColumns } from 'vexip-ui'
+import { StarService } from '@/common/app/api'
+import NPadding from '@/components/custom/NPadding.vue'
+import { Card, Space, Table, defineTableColumns } from 'vexip-ui'
 import { ref } from 'vue'
 
+const starService = new StarService()
+
 const page = ref(1)
-const { loading, data, send } = new StarRequest().list(page.value)
+const { loading, data } = starService.list(page.value)
 
 const columns = defineTableColumns([
   {
@@ -21,17 +23,17 @@ const columns = defineTableColumns([
     key: 'description'
   }
 ])
-
-send()
 </script>
 
 <template>
-  <ComCtl :loading="loading">
-    <Card :loading="loading">
-      <template #title> 数据面板 </template>
-    </Card>
-    <Table class="w-full" :loading="loading" :columns="columns" :data="data"></Table>
-  </ComCtl>
+  <NPadding>
+    <Space vertical>
+      <Card class="w-full" :loading="loading">
+        <template #title>数据面板</template>
+      </Card>
+      <Table class="w-full" :loading="loading" :columns="columns" :data="data"></Table>
+    </Space>
+  </NPadding>
 </template>
 
 <style scoped></style>

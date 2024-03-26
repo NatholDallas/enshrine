@@ -10,10 +10,11 @@ import 'vexip-ui/css/index.css'
 import 'virtual:uno.css'
 import './assets/main.css'
 
-const app = createApp(App)
+const pinia = createPinia()
 
+const app = createApp(App)
 app.use(Particles)
-app.use(createPinia())
+app.use(pinia)
 app.use(router)
 
 app.mount('#app')

@@ -7,9 +7,16 @@ export class LoginIn extends Model {
 
 export class RegisterIn extends Model {
   email: string = ''
+  code: string = ''
   username: string = ''
   password: string = ''
 }
+
+export class EmailIn extends Model {
+  email: string = ''
+}
+
+export class EmailUpdateIn extends Model {}
 
 export class UserIn extends Model {
   email: string = ''
@@ -30,7 +37,6 @@ export class StarIn extends Model {
 
 export class StarOut extends StarIn {
   readonly id: number = -1
-  readonly user: number = -1
 }
 
 export class VideoIn extends Model {
@@ -42,7 +48,6 @@ export class VideoIn extends Model {
 
 export class VideoOut extends VideoIn {
   readonly id: number = -1
-  readonly user: number = -1
 }
 
 export class WebsiteIn extends Model {

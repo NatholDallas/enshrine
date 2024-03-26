@@ -12,6 +12,9 @@ export const useUserStore = defineStore('user', {
   state: defaultValue,
   actions: {
     reset: () => (useUserStore().$state = defaultValue())
+  },
+  persist: {
+    storage: localStorage
   }
 })
 
